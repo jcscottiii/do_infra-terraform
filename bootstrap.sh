@@ -16,9 +16,9 @@ ufw -f enable
 # https://github.com/dokku/dokku/pull/2408
 KEY_FILE=/tmp/userkey
 head -1 $HOME/.ssh/authorized_keys > $KEY_FILE
-wget https://raw.githubusercontent.com/dokku/dokku/v0.7.1/bootstrap.sh
-sudo DOKKU_TAG=v0.7.1 \
-  DOKKU_VHOST_ENABLE=true \
+export DOKKU_TAG=v0.8.2
+wget "https://raw.githubusercontent.com/dokku/dokku/$DOKKU_TAG/bootstrap.sh"
+sudo DOKKU_VHOST_ENABLE=true \
   VHOST_ENABLE=true \
   DOKKU_WEB_CONFIG=false \
   DOKKU_HOSTNAME="thedark.cloud" \
@@ -29,6 +29,15 @@ sudo DOKKU_TAG=v0.7.1 \
 # Setup Dokku plugins
 # Let's Encrypt
 dokku plugin:install https://github.com/dokku/dokku-letsencrypt.git
+# Redirect plugin
+dokku plugin:install https://github.com/dokku/dokku-redirect.git
 
 # Setup apps
 dokku apps:create jamescscott.io
+dokku domains:add jamescscott.io jamescscott.io
+dokku redirect:set jamescscott.io www.jamescscott.io jamescscott.io
+dokku apps:create staging-alishaplusjames
+dokku domains:add staging-alishaplusjames staging.alishaplusjames.com
+dokku apps:create alishaplusjames
+dokku domains:add alishaplusjames alishaplusjames.com
+dokku redirect:set alishaplusjames www.alishaplusjames.com alishaplusjames.com
