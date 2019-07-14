@@ -1,51 +1,27 @@
 # My DigitalOcean Infrastructure Using Terraform
 
-This repository contains my infrastructure as code configuration (via Terraform) for my DigitalOcean setup.
-
-By running this plan, it will provision a DigitalOcean droplet. Upon provisioning, it will automatically:
-- Setup firewall rules to only receive on ports 22, 80, and 443.
-- Setup [Dokku](http://dokku.viewdocs.io/dokku/)
-- Setup the [Dokku Let's Encrypt Plugin](https://github.com/dokku/dokku-letsencrypt).
-- Deploy my [blog](https://jamescsott.io) with an SSL.
-
-## Requirements
-- Terraform
-- DigitalOcean Account
-- Two Domains
- - One for the Dokku API
- - One for my blog.
+https://www.digitalocean.com/docs/kubernetes/changelog/
+https://developers.digitalocean.com/documentation/v2/#kubernetes
 
 ## Setup
 
-Make a copy of the secrets variables template file.
-
-```sh
-cp secrets.tfvars.template secrets.tfvars
+Step 1:
+```
+export DO_TOKEN="TOKENVALUEHERE"
 ```
 
-### Explanation of variables
+Step 2:
+```
+terraform apply  -var "do_token=$DO_TOKEN"
+```
 
-#### `do_token`
-The DigitalOcean API token with both read and write perms.
-The token can be generated from this [site](https://cloud.digitalocean.com/settings/api/tokens)
+Step 3:
+```
+terraform output kube_config > ~/.kube/config
+```
 
-#### `hostname`
-The domain for the Dokku API.
-
-#### `blog_hostname`
-The domain for the blog.
-
-#### `public_key`
-Location of the SSH public key on the machine running Terraform.
-
-#### `private_key`
-Location of the SSH private key on the machine running Terraform.
-
-## Using
-```sh
-# Verify that everything is right
-terraform plan -var-file="secrets.tfvars"
-
-# Run the plan
-terraform apply -var-file=secrets.tfvars
+Step 4:
+```
+./scripts/00-pre-setup/cert-manager.sh 
+kubectl apply -f scripts/01-post-setup/
 ```
