@@ -4,11 +4,16 @@ resource "kubernetes_namespace" "external_dns" {
   }
 }
 
+data "helm_repository" "bitnami" {
+  name = "bitnami"
+  url  = "https://charts.bitnami.com/bitnami"
+}
+
 resource "helm_release" "external_dns" {
   name       = "external-dns"
-  repository = data.helm_repository.stable.metadata.0.name
-  chart      = "external-dns"
-  version    = "1.7.9"
+  repository = data.helm_repository.bitnami.metadata.0.name
+  chart      = "bitnami/external-dns"
+  version    = "2.20.5"
   namespace  = "external-dns"
 
   set_sensitive {
