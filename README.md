@@ -3,35 +3,23 @@
 https://www.digitalocean.com/docs/kubernetes/changelog/
 https://developers.digitalocean.com/documentation/v2/#kubernetes
 
-## Setup
 
-Step 0:
+![Terraform GitHub Actions For Master Merge](https://github.com/jcscottiii/do_infra-terraform/workflows/Terraform%20GitHub%20Actions%20For%20Master%20Merge/badge.svg?branch=master)
 
-```
-# One time only
-terraform init
-```
+## Description
+This repository is automated to deploy to master with Terraform
 
-Step 1:
-```
-export DO_TOKEN="TOKENVALUEHERE"
-```
+It uses three providers:
 
-Step 2:
-```
-terraform apply  -var "do_token=$DO_TOKEN"
-```
+- [DigitalOcean](https://www.terraform.io/docs/providers/do/index.html)
+- [Kubernetes](https://www.terraform.io/docs/providers/kubernetes/index.html)
+- [Helm](https://www.terraform.io/docs/providers/helm/index.html) (currently using Helm v2)
 
-Step 3:
-```
-terraform output kube_config > ~/.kube/config
-```
+With those three providers, we get the following:
 
-Step 4:
-```
-./scripts/00-pre-setup/cert-manager.sh 
-kubectl apply -f scripts/01-post-setup/
-```
-
-https://gist.github.com/jamesbuckett/0f4c657ff8b3b9590e1625149b299f77
-kubectl -n rook-ceph patch cephclusters.ceph.rook.io rook-ceph -p '{"metadata":{"finalizers": []}}' --type=merge
+- A Kubernetes cluster using [DigitalOcean's Managed Kubernetes Offering](https://www.digitalocean.com/products/kubernetes/)
+- Tiller ServiceAccount for Helm v2 (will go away when migrated to Helm v3)
+- [Cert Manager Helm Chart](https://github.com/jetstack/cert-manager/tree/master/deploy/charts/cert-manager) (for getting HTTPS certs via Let's Encrypt)
+- [NGINX Ingress Helm Chart](https://github.com/helm/charts/tree/master/stable/nginx-ingress) (for exposing services)
+- [External DNS Helm Chart](https://github.com/helm/charts/tree/master/stable/external-dns) (for automatically manipulating DNS records in DigitalOcean)
+- [Kubernetes Dashboard](https://github.com/helm/charts/tree/master/stable/kubernetes-dashboard) (for viewing the cluster status)
