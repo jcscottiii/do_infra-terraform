@@ -13,6 +13,10 @@ jobs:
         uses: actions/checkout@master
       - name: Delete old terraform folder
         run: rm -rf .terraform
+      - name: Check length
+        env:
+          TF_CLI_ARGS: -backend-config="bucket=${{ secrets.SPACE_BUCKET_NAME }}"
+        run: echo $TF_CLI_ARGS | wc -c
       - name: 'Terraform Format'
         uses: hashicorp/terraform-github-actions@master
         with:
