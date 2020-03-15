@@ -1,4 +1,4 @@
-name: 'Terraform GitHub Actions'
+name: 'Terraform GitHub Actions For PRs'
 on:
   - pull_request
 env:
@@ -6,7 +6,7 @@ env:
   tf_working_dir: '.'
 jobs:
   terraform:
-    name: 'Terraform'
+    name: 'Terraform Check'
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout'
