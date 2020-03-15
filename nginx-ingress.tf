@@ -9,18 +9,13 @@ resource "helm_release" "nginx_ingress" {
   name       = "nginx-ingress"
   repository = data.helm_repository.stable.metadata.0.name
   chart      = "nginx-ingress"
-  version    = "1.7.0"
+  version    = "1.33.5"
   namespace  = "nginx"
 
 
   set {
     name  = "controller.publishService.enabled"
     value = "true"
-  }
-
-  set {
-    name  = "controller.image.tag"
-    value = "0.23.0"
   }
 }
 
