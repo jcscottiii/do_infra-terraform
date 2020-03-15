@@ -29,6 +29,9 @@ jobs:
           tf_actions_comment: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets. SPACES_ACCESS_TOKEN }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets. SPACES_SECRET_KEY }}
+          TF_CLI_ARGS: -backend-config="bucket=${{ secrets.SPACE_BUCKET_NAME }}"
       - name: 'Terraform Validate'
         uses: hashicorp/terraform-github-actions@master
         with:
