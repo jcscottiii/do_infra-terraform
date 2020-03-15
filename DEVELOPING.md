@@ -32,3 +32,7 @@ kubectl apply -f scripts/01-post-setup/
 
 https://gist.github.com/jamesbuckett/0f4c657ff8b3b9590e1625149b299f77
 kubectl -n rook-ceph patch cephclusters.ceph.rook.io rook-ceph -p '{"metadata":{"finalizers": []}}' --type=merge
+
+Migrated to helm3 using these steps
+
+https://github.com/terraform-providers/terraform-provider-helm/pull/378#issuecomment-582738772

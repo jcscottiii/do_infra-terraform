@@ -1,6 +1,4 @@
 provider "helm" {
-  service_account = "tiller"
-  max_history     = 200
   kubernetes {
     host                   = digitalocean_kubernetes_cluster.personal.endpoint
     client_certificate     = base64decode(digitalocean_kubernetes_cluster.personal.kube_config.0.client_certificate)

@@ -1,7 +1,4 @@
 terraform {
-  required_providers {
-    helm = "~> v0.10.4"
-  }
   backend "s3" {
     endpoint                    = "nyc3.digitaloceanspaces.com"
     region                      = "us-west-1"
