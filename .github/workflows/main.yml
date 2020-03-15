@@ -13,10 +13,6 @@ jobs:
         uses: actions/checkout@master
       - name: Delete old terraform folder
         run: rm -rf .terraform
-      - name: Check length
-        env:
-          TF_CLI_ARGS: -backend-config="bucket=${{ secrets.SPACE_BUCKET_NAME }}"
-        run: echo $TF_CLI_ARGS | wc -c
       - name: 'Terraform Format'
         uses: hashicorp/terraform-github-actions@master
         with:
@@ -56,4 +52,6 @@ jobs:
           tf_actions_comment: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.SPACES_ACCESS_TOKEN }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SPACES_SECRET_KEY }}
           TF_VAR_do_token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
