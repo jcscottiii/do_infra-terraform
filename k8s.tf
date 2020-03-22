@@ -10,5 +10,5 @@ provider "kubernetes" {
 
 module "jamescscott-io" {
   source = "./app"
-  name = "jamescscott-io"
+  name   = "jamescscott-io"
 }
