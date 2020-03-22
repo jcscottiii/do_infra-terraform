@@ -7,3 +7,8 @@ provider "kubernetes" {
   token                  = digitalocean_kubernetes_cluster.personal.kube_config.0.token
   load_config_file       = false
 }
+
+module "jamescscott-io" {
+  source = "./app"
+  name = "jamescscott-io"
+}
