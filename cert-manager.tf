@@ -1,7 +1,3 @@
-data "helm_repository" "jetstack" {
-  name = "jetstack"
-  url  = "https://charts.jetstack.io"
-}
 resource "kubernetes_namespace" "cert_manager" {
   metadata {
     name = "cert-manager"
@@ -13,7 +9,7 @@ resource "kubernetes_namespace" "cert_manager" {
 
 resource "helm_release" "cert_manager" {
   name       = "cert-manager"
-  repository = data.helm_repository.jetstack.metadata.0.name
+  repository = "https://charts.jetstack.io"
   chart      = "cert-manager"
   version    = "v0.14.0"
   namespace  = "cert-manager"
