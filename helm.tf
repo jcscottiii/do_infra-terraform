@@ -7,8 +7,3 @@ provider "helm" {
     token                  = digitalocean_kubernetes_cluster.personal.kube_config.0.token
   }
 }
-
-data "helm_repository" "stable" {
-  name = "stable"
-  url  = "https://kubernetes-charts.storage.googleapis.com"
-}
