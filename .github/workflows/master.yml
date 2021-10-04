@@ -2,6 +2,7 @@ name: 'Terraform GitHub Actions For Master Merge'
 on:
   push:
     branches: master
+  workflow_dispatch:
 env:
   tf_version: 'latest'
   tf_working_dir: '.'
